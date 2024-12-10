@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import Controller from "../controllers/UserController";
 export const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -6,4 +7,4 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.post("/login");
-router.post("/register");
+router.post("/register", Controller.register);

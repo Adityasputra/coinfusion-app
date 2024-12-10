@@ -10,7 +10,7 @@ if (!MONGODB_URI) {
 
 export const connect = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI, {dbName: "coinfusion_db"});
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error(
