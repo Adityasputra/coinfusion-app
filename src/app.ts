@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import { connect } from "./config/mongoose";
 import { createServer } from "node:http";
+import { router } from "./routes/index.routes";
 
 export const app = express();
 export const server = createServer(app);
@@ -15,5 +16,4 @@ app.use(express.urlencoded({ extended: true }));
   await connect();
 })();
 
-app.use("")
-
+app.use("/", router);
