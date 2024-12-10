@@ -6,5 +6,5 @@ router.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Server is running ..." });
 });
 
-router.post("/login");
+router.post("/login", Controller.login);
 router.post("/register", Controller.register);

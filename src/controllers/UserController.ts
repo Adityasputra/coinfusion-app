@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { IUserSchema } from "../types/user.interface";
 import { User } from "../models/user.model";
 import { startSession } from "mongoose";
-import { hashPassword } from "../utils/bcrypt";
+import { hashPassword, comparePassword } from "../utils/bcrypt";
 import { Profile } from "../models/profile.model";
 import { transporter } from "../config/nodemailer";
+import { signToken } from "../utils/jsonwebtoken";
 
 export default class Controller {
   static async register(req: Request, res: Response, next: NextFunction) {
@@ -56,6 +57,30 @@ export default class Controller {
       next(error);
     } finally {
       session.endSession();
+    }
+  }
+
+  static async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+      if (!email) throw new Error("EmailRequiredError");
+      if (!password) throw new Error("PasswordRequiredError");
+
+      const findUser = await User.findOne({ email }).select(
+        "_id email password"
+      );
+      if (!findUser) throw new Error("Unauthorized");
+
+      if (!comparePassword(password, findUser.password))
+        throw new Error("Unauthorized");
+
+      const access_token = signToken({
+        _id: `${findUser._id}`,
+      });
+
+      res.status(200).json({ access_token });
+    } catch (error) {
+      next(error);
     }
   }
 }
