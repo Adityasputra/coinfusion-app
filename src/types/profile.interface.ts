@@ -10,4 +10,4 @@ export interface IProfile {
   updatedAt?: Date;
 }
 
-export type IProfileScheme = Omit<IProfile, "_id">;
+export type IProfileSchema = Omit<IProfile, "_id">;

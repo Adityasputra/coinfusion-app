@@ -8,4 +8,4 @@ export interface IUser {
   updatedAt?: Date;
 }
 
-export type IUserScheme = Omit<IUser, "_id">;
+export type IUserSchema = Omit<IUser, "_id">;
