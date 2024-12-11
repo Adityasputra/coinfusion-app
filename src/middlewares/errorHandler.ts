@@ -40,6 +40,10 @@ export const errorHandler = (
       status = 403;
       message = "You don't have permission to access this resource";
       break;
+    case "NotFound":
+      status = 404;
+      message = "Not Found";
+      break;
   }
 
   res.status(status).json({ message });
