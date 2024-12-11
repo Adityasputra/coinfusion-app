@@ -5,6 +5,8 @@ export interface IPortofolio {
   _id: ObjectId;
   userId: ObjectId;
   coins: ICoinSchema[];
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export type IPortofolioSchema = Omit<IPortofolio, "_id">;
