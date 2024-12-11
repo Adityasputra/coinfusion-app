@@ -1,11 +1,15 @@
 import { ObjectId } from "mongodb";
+import { ICoinSchema } from "./coin.interface";
 
-export interface Coin {
+export interface IPortofolio {
   _id: ObjectId;
-  coinId: ObjectId;
-  name: string;
-  sysmbol: string;
-  amount: number;
+  userId: ObjectId;
+  coins: ICoinSchema[];
 }
 
-export type CoinSchema = Omit<Coin, "_id">;
+export type IPortofolioSchema = Omit<IPortofolio, "_id">;
+
+export interface IPortfolioResponse {
+  message: string;
+  portfolio: IPortofolioSchema;
+}
