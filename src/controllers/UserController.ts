@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IUserSchema } from "../types/user.interface";
 import { User } from "../models/user.model";
 import { startSession } from "mongoose";
-import { hashPassword, comparePassword } from "../utils/bcrypt";
+import { hashPassword, comparePassword } from "../utils/bcryptjs";
 import { Profile } from "../models/profile.model";
 import { transporter } from "../config/nodemailer";
 import { signToken } from "../utils/jsonwebtoken";
