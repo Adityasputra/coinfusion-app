@@ -11,7 +11,7 @@ interface AuthenticatedRequest extends Request {
   file?: Express.Multer.File;
 }
 
-export class Controller {
+export class ProfileController {
   static async getProfile(
     req: AuthenticatedRequest,
     res: Response,

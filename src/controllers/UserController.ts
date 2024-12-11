@@ -7,7 +7,7 @@ import { Profile } from "../models/profile.model";
 import { transporter } from "../config/nodemailer";
 import { signToken } from "../utils/jsonwebtoken";
 
-export default class Controller {
+export default class UserController {
   static async register(req: Request, res: Response, next: NextFunction) {
     const session = await startSession();
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { fetchCryptoNews } from "../services/NewsService";
 
-export class Controller {
+export class NewsController {
   static async getNews(req: Request, res: Response, next: NextFunction) {
     try {
       const { query } = req.query;
