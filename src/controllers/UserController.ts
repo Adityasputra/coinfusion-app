@@ -6,6 +6,7 @@ import { hashPassword, comparePassword } from "../utils/bcryptjs";
 import { Profile } from "../models/profile.model";
 import { transporter } from "../config/nodemailer";
 import { signToken } from "../utils/jsonwebtoken";
+// import { OAuth2Client } from "google-auth-library";
 
 export default class UserController {
   static async register(req: Request, res: Response, next: NextFunction) {
@@ -83,4 +84,23 @@ export default class UserController {
       next(error);
     }
   }
+
+  // static async loginGoogle(req:Request, res: Response, next: NextFunction){
+  //   try {
+  //     const { google_token } = req.headers
+  //     const client = new OAuth2Client()
+  //     const ticket = await client.verifyIdToken({
+  //       idToken: google_token.
+  //       audience: process.env.GOOGLE_CLIENT_ID
+  //     })
+
+  //     const { email } = ticket.payload;
+
+  //     const [user, created] = await User.findOrCreate({
+
+  //     })
+  //   } catch (error) {
+      
+  //   }
+  // }
 }
