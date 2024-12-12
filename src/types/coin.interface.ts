@@ -4,7 +4,7 @@ export interface ICoin {
   _id: ObjectId;
   coinId: string;
   name: string;
-  sysmbol: string;
+  symbol: string;
   amount: number;
 }
 
