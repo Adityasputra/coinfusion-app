@@ -1,88 +1,87 @@
-## ⚠️ Catatan Penting
+## ⚠️ Important Notes
 
-Proyek ini adalah **portofolio pribadi** yang dibuat untuk menunjukkan keterampilan saya sebagai seorang programmer. **Bukan aplikasi yang diproduksi atau digunakan di dunia nyata.** Meskipun demikian, saya berusaha untuk menerapkan teknologi dan praktik terbaik dalam pengembangan proyek ini.
+This project is a **personal portfolio** created to showcase my skills as a programmer. **It is not a production application or intended for real-world use.** Nevertheless, I strive to implement the latest technologies and best practices in developing this project.
 
-# 🌟 CoinFusion - Wawasan Kripto & Asisten Trading AI Anda
+# 🌟 CoinFusion - Your AI-Powered Crypto Insights & Trading Assistant
 
-**CoinFusion** adalah platform inovatif yang dirancang untuk melacak, dan merencanakan investasi cryptocurrency Anda. Dengan fitur yang didukung oleh AI, CoinFusion membantu Anda tetap terdepan di pasar dengan memberikan wawasan dan strategi trading yang dipersonalisasi. Baik Anda pemula maupun trader berpengalaman.
-
----
-
-## 🚀 Fitur Utama
-
-- **📊 Wawasan Pasar Real-Time**  
-  Mendapatkan data pasar terkini, tren harga, dan feed berita untuk membuat keputusan yang lebih terinformasi.
-
-- **🤖 Strategi Trading yang Dihasilkan AI**  
-  Mendapatkan strategi trading yang disesuaikan dengan kebutuhan Anda, yang didukung oleh AI canggih untuk memaksimalkan investasi Anda.
-
-- **💡 Fakta Menarik & Wawasan**  
-  Menjelajahi fakta menarik dan tips tentang pasar kripto untuk meningkatkan pengetahuan trading Anda.
+**CoinFusion** is an innovative platform designed to track and plan your cryptocurrency investments. With AI-powered features, CoinFusion helps you stay ahead in the market by providing personalized insights and trading strategies. Whether you're a beginner or an experienced trader, CoinFusion has something for you.
 
 ---
 
-## 🖼️ Tangkapan Layar
+## 🚀 Key Features
 
-![Dashboard CoinFusion](assets/images/dashboard.png)  
-_Contoh tampilan dashboard CoinFusion di mana Anda bisa melihat portfolio dan tren pasar._
+- **📊 Real-Time Market Insights**  
+  Access the latest market data, price trends, and news feeds to make well-informed decisions.
+
+- **🤖 AI-Generated Trading Strategies**  
+  Receive tailored trading strategies powered by advanced AI to maximize your investments.
+
+- **💡 Fun Facts & Insights**  
+  Discover intriguing facts and tips about the crypto market to enhance your trading knowledge.
 
 ---
 
-## ⚙️ Pengaturan & Instalasi
+## 🖼️ Screenshots
 
-Untuk memulai dengan CoinFusion, ikuti langkah-langkah berikut:
+![CoinFusion Dashboard](assets/images/dashboard.png)  
+_Example of the CoinFusion dashboard, where you can view your portfolio and market trends._
 
-1. Kloning repositori:
+---
+
+## ⚙️ Setup & Installation
+
+To get started with CoinFusion, follow these steps:
+
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/username-anda/coinfusion.git
+   git clone https://github.com/your-username/coinfusion.git
    ```
 
-2. Instal dependensi:
+2. Install dependencies:
 
    ```bash
    cd coinfusion
    npm install
    ```
 
-3. Jalankan aplikasi:
+3. Run the application:
 
    ```bash
    npm run dev
    ```
 
-4. Kunjungi aplikasi di `http://localhost:3000`
+4. Visit the application at `http://localhost:3000`.
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Technologies Used
 
-- **Node.js**: Pengembangan backend.
-- **Express.js**: Framework web untuk membangun API RESTful.
-- **TypeScript**: Digunakan untuk pengecekan tipe statis dan meningkatkan pengembangan dengan alat yang lebih baik.
-- **MongoDB & Mongoose**: Sistem manajemen database untuk menyimpan data pengguna. Mongoose memberikan solusi elegan untuk berinteraksi dengan MongoDB.
-- **ioredis** & **Redis**: Untuk caching data dalam memori dan pengambilan data yang cepat.
-- **Google Gemini (via @google/generative-ai)**: Wawasan dan saran berbasis AI untuk trading cryptocurrency.
-- **Cloudinary**: Untuk upload gambar (seperti gambar profil) dan pengelolaan media.
-- **Axios**: Untuk membuat permintaan HTTP ke API eksternal (misalnya untuk mengambil harga pasar cryptocurrency).
-- **jsonwebtoken (JWT)**: Untuk autentikasi pengguna dan mengamankan route API.
-- **bcryptjs**: Untuk mengenkripsi kata sandi pengguna secara aman.
-- **Multer**: Untuk menangani upload file di backend (misalnya upload gambar profil).
-- **Nodemailer**: Untuk mengirim email notifikasi kepada pengguna.
-- **CORS (Cross-Origin Resource Sharing)**: Untuk memungkinkan permintaan antar domain yang berbeda.
+- **Node.js**: Backend development.
+- **Express.js**: Web framework for building RESTful APIs.
+- **TypeScript**: Used for static type checking and enhanced tooling support.
+- **MongoDB & Mongoose**: Database management system for storing user data, with Mongoose offering an elegant solution for interacting with MongoDB.
+- **ioredis** & **Redis**: For in-memory data caching and quick data retrieval.
+- **Google Gemini (via @google/generative-ai)**: AI-based insights and suggestions for cryptocurrency trading.
+- **Cloudinary**: For image uploads (e.g., profile pictures) and media management.
+- **Axios**: To make HTTP requests to external APIs (e.g., fetching cryptocurrency market prices).
+- **jsonwebtoken (JWT)**: For user authentication and securing API routes.
+- **bcryptjs**: To securely hash user passwords.
+- **Multer**: For handling file uploads on the backend (e.g., profile picture uploads).
+- **Nodemailer**: To send email notifications to users.
+- **CORS (Cross-Origin Resource Sharing)**: To enable requests across different domains.
 
 ---
 
-Proyek ini menggunakan teknologi backend modern, layanan AI, dan solusi cloud untuk memberikan pengalaman yang mulus dan aman bagi pengguna.
+This project leverages modern backend technologies, AI services, and cloud solutions to deliver a seamless and secure user experience.
 
-
-## 🤝 Hubungi Kami
+## 🤝 Contact Us
 
 - **Website**: [coinfusion.com](https://coinfusion.com)
 - **GitHub**: [coinfusion-repo](https://github.com/Adityasputra/coinfusion-server)
 
 ---
 
-## 🎉 Penghargaan
+## 🎉 Acknowledgements
 
-- Terima kasih kepada **Google Gemini** untuk fitur-fitur yang didukung AI.
+- Special thanks to **Google Gemini** for powering the AI-based features.
