@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "./pages/MainLayout";
-import CoinMarket from "./pages/CoinMarket";
+import CoinMarket from "./pages/Market";
 
 const router = createBrowserRouter([
   {
@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/coin-market",
+        path: "/market",
         element: <CoinMarket />,
       },
     ],
