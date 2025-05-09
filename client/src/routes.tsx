@@ -1,9 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "./pages/MainLayout";
+import CoinMarket from "./pages/CoinMarket";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1 className="text-7xl">Home</h1>,
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/coin-market",
+        element: <CoinMarket />,
+      },
+    ],
   },
 ]);
 
