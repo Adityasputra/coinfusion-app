@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Coin } from "../types/Coin";
 import { instance as axios } from "../services/axiosInstance";
+import CurrencySelector from "../components/CurrencySelector";
 
 export default function CoinMarket() {
   const [coins, setCoins] = useState<Coin[]>([]);
@@ -33,6 +34,7 @@ export default function CoinMarket() {
 
   return (
     <div className="container">
+      <CurrencySelector />
       <h1>Coin Market</h1>
       {loading ? (
         <p>Loading data...</p>
