@@ -46,3 +46,18 @@ export const getCoinMarketChart = async (id: string, currency: string) => {
     throw error;
   }
 };
+
+export const getSimplePrice = async (ids: string[], vsCurrency: string[]) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/simple/price`, {
+      params: {
+        ids: ids.join(","),
+        vs_currencies: vsCurrency.join(","),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching simple price:", error);
+    throw error;
+  }
+};

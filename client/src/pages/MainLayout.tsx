@@ -5,6 +5,9 @@ export default function MainLayout() {
     <div>
       <nav style={{ padding: "1rem", background: "#f0f0f0" }}>
         <NavLink to="/market">Coin Market</NavLink>
+        <NavLink to="/converter" style={{ marginLeft: "1rem" }}>
+          Currency Converter
+        </NavLink>
       </nav>
       <main>
         <Outlet />
