@@ -5,6 +5,7 @@ import CoinDetail from "./pages/CoinDetail";
 import Converter from "./pages/Converter";
 import Watchlist from "./pages/Watchlist";
 import Portfolio from "./pages/Portfolio";
+import Education from "./pages/Education";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "converter", element: <Converter /> },
       { path: "watchlist", element: <Watchlist /> },
       { path: "portfolio", element: <Portfolio /> },
+      { path: "education", element: <Education /> },
     ],
   },
 ]);
