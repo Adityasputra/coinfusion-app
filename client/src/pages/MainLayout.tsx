@@ -11,6 +11,9 @@ export default function MainLayout() {
         <NavLink to="/watchlist" style={{ marginLeft: "1rem" }}>
           Watchlist
         </NavLink>
+        <NavLink to="/portfolio" style={{ marginLeft: "1rem" }}>
+          Portfolio
+        </NavLink>
       </nav>
       <main>
         <Outlet />

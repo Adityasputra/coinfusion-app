@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { getCoinDetail, getCoinMarketChart } from "../services/coingecko";
 import {
@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { addOrUpdateHolding } from "../slices/portfolioSlice";
 
 export default function CoinDetail() {
   const { id } = useParams();
@@ -21,6 +22,8 @@ export default function CoinDetail() {
 
   const [coin, setCoin] = useState<any>(null);
   const [chartData, setChartData] = useState<any[]>([]);
+  const [amountInput, setAmountInput] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!id) return;
@@ -69,6 +72,32 @@ export default function CoinDetail() {
         Market Cap: {symbol}
         {coin.market_data.market_cap?.[currency]?.toLocaleString?.() ?? "N/A"}
       </p>
+
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold mb-2">Tambahkan ke Portofolio</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="number"
+            min="0"
+            value={amountInput}
+            onChange={(e) => setAmountInput(e.target.value)}
+            placeholder="Jumlah yang dimiliki"
+            className="p-2 rounded bg-gray-800 text-white w-40"
+          />
+          <button
+            onClick={() => {
+              const amount = parseFloat(amountInput);
+              if (!isNaN(amount) && amount >= 0 && id) {
+                dispatch(addOrUpdateHolding({ id, amount }));
+                setAmountInput("");
+              }
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Simpan
+          </button>
+        </div>
+      </div>
 
       <h2 className="text-xl font-semibold mb-2">7 Day Price Chart</h2>
       <ResponsiveContainer width="100%" height={300}>

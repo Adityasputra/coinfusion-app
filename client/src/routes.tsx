@@ -4,6 +4,7 @@ import CoinMarket from "./pages/Market";
 import CoinDetail from "./pages/CoinDetail";
 import Converter from "./pages/Converter";
 import Watchlist from "./pages/Watchlist";
+import Portfolio from "./pages/Portfolio";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
       { path: "coin/:id", element: <CoinDetail /> },
       { path: "converter", element: <Converter /> },
       { path: "watchlist", element: <Watchlist /> },
+      { path: "portfolio", element: <Portfolio /> },
     ],
   },
 ]);
