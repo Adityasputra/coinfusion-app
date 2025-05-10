@@ -8,6 +8,9 @@ export default function MainLayout() {
         <NavLink to="/converter" style={{ marginLeft: "1rem" }}>
           Currency Converter
         </NavLink>
+        <NavLink to="/watchlist" style={{ marginLeft: "1rem" }}>
+          Watchlist
+        </NavLink>
       </nav>
       <main>
         <Outlet />
