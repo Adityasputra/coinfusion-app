@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserSchema } from "../types/user.interface";
-import { User } from "../models/user.model";
+import { User } from "../models/userModel";
 import { startSession } from "mongoose";
 import { hashPassword, comparePassword } from "../utils/bcryptjs";
-import { Profile } from "../models/profile.model";
+import { Profile } from "../models/profileModel";
 import { transporter } from "../config/nodemailer";
 import { signToken } from "../utils/jsonwebtoken";
 // import { OAuth2Client } from "google-auth-library";

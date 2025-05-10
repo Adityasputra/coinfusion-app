@@ -1,85 +1,87 @@
-// import { Request, Response, NextFunction } from "express";
-// import { Portofolio } from "../models/portofolio.model";
-// import { Coin } from "../models/coin.model";
-// import { IAddCoinRequest } from "../types/coin.interface";
-// import { ObjectId } from "mongodb";
+import { Request, Response } from "express";
+import Portfolio from "../models/portfolioModel";
+import mongoose from "mongoose";
+import { AuthenticatedRequest } from "../middlewares/auth";
 
-// interface AuthenticatedRequest extends Request {
-//   user?: {
-//     _id: ObjectId;
-//   };
-// }
+export const getPortfolio = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const portfolio = await Portfolio.find({ userId: req.user?._id });
+    res.status(200).json(portfolio);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch portfolio", error: error.message });
+  }
+};
 
-// export class PortofolioController {
-//   static async addCoinToPortfolio(
-//     req: AuthenticatedRequest,
-//     res: Response,
-//     next: NextFunction
-//   ) {
-//     const session = await Portofolio.startSession();
-//     session.startTransaction();
-//     try {
-//       const { user } = req;
-//       if (!user || !user._id) {
-//         throw {
-//           name: "Unauthenticated",
-//           message: "User must be logged in",
-//         };
-//       }
+export const addPortfolioItem = async (req: AuthenticatedRequest, res: Response) => {
+  const { coinId, amount, buyPrice, note } = req.body;
 
-//       const { coinId, amount }: IAddCoinRequest = req.body;
+  try {
+    const newItem = await Portfolio.create({
+      userId: req.user?._id,
+      coinId,
+      amount,
+      buyPrice,
+      note,
+    });
 
-//       if (!coinId || !amount) {
-//         throw {
-//           name: "InvalidData",
-//           message: "Coin ID and amount are required",
-//         };
-//       }
+    res.status(201).json(newItem);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: "Failed to add item", error: error.message });
+  }
+};
 
-//       let portofolio = await Portofolio.findOne({ userId: user._id });
-//       if (!portofolio) {
-//         portofolio = new Portofolio({ userId: user._id, coins: [] });
-//       }
+export const updatePortfolioItem = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const { amount, buyPrice, note } = req.body;
 
-//       const existingCoin = portofolio.coins.find((coin) =>
-//         coin.coinId === coinId
-//       );
+  try {
+    const updated = await Portfolio.findOneAndUpdate(
+      { _id: id, userId: req.user?._id },
+      { amount, buyPrice, note },
+      { new: true }
+    );
 
-//       if (existingCoin) {
-//         existingCoin.amount += amount;
-//       } else {
-//         const coinData = await Coin.findOne({ _id: coinId });
-//         if (!coinData) {
-//           throw { name: "NotFound", message: "Coin not found" };
-//         }
+    if (!updated) {
+      res.status(404).json({ message: "Item not found" });
+      return;
+    }
 
-//         // Tambahkan koin baru
-//         portofolio.coins.push({
-//           coinId: coinData._id.toString(),
-//           name: coinData.name,
-//           symbol: coinData.symbol,
-//           amount,
-//         });
-//       }
+    res.status(200).json(updated);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: "Failed to update item", error: error.message });
+  }
+};
 
-//       // Simpan portofolio
-//       await portofolio.save({ session });
+export const deletePortfolioItem = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<any> => {
+  const { id } = req.params;
 
-//       await session.commitTransaction();
-//       session.endSession();
+  try {
+    const deleted = await Portfolio.findOneAndDelete({
+      _id: id,
+      userId: req.user?._id,
+    });
 
-//       res.status(200).json({
-//         message: "Coin successfully added to portfolio",
-//         portfolio: portofolio,
-//       });
-//     } catch (error) {
-//         console.dir(error, { depth: null})
-//       await session.abortTransaction();
-//       session.endSession();
-//       next(error);
-//     }
-//   }
-// }
+    if (!deleted) {
+      return res.status(404).json({ message: "Item not found" });
+    }
 
-
-// in progress
+    return res.status(200).json({ message: "Deleted successfully" });
+  } catch (error: any) {
+    return res.status(500).json({
+      message: "Failed to delete item",
+      error: error.message,
+    });
+  }
+};

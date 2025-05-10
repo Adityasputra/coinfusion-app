@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import { Profile } from "../models/profile.model";
+import { Profile } from "../models/profileModel";
 import { startSession } from "mongoose";
 import cloudinary from "../utils/cloudinary";
 

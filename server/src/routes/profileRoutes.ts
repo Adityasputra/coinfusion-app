@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authentication } from "../middlewares/auth";
 import { upload } from "../middlewares/multer";
 import { ProfileController } from "../controllers/ProfileController";
+import { authentication } from "../middlewares/auth";
 export const router = Router();
 
 router.patch(
@@ -10,4 +10,4 @@ router.patch(
   upload.single("image"),
   ProfileController.updateProfile
 );
-router.get("/", authentication, ProfileController.getProfile);
+router.get("/", ProfileController.getProfile);
