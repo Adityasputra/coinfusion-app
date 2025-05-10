@@ -4,18 +4,17 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { getMarketData } from "../services/coingecko";
 import WatchlistToggleButton from "../components/WatchlistToggleButton";
+import { Link } from "react-router-dom";
 
 export default function CoinMarket() {
   const [coins, setCoins] = useState<Coin[]>([]);
   const currency = useSelector((state: RootState) => state.currency.currency);
   const symbol = useSelector((state: RootState) => state.currency.symbol);
-  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getMarketData(currency);
       setCoins(data);
-      // setLoading(false);
     };
 
     fetchData();
@@ -28,15 +27,17 @@ export default function CoinMarket() {
         {coins.map((coin) => (
           <div key={coin.id} className="bg-gray-800 rounded-lg p-4 shadow-md">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img src={coin.image} alt={coin.name} className="w-8 h-8" />
-                <div>
-                  <p className="font-semibold">{coin.name}</p>
-                  <p className="text-sm text-gray-400">
-                    {coin.symbol.toUpperCase()}
-                  </p>
+              <Link to={`/coin/${coin.id}`}>
+                <div className="flex items-center gap-3">
+                  <img src={coin.image} alt={coin.name} className="w-8 h-8" />
+                  <div>
+                    <p className="font-semibold">{coin.name}</p>
+                    <p className="text-sm text-gray-400">
+                      {coin.symbol.toUpperCase()}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
               <WatchlistToggleButton coinId={coin.id} />
             </div>
             <p className="mt-2">
