@@ -1,3 +1,91 @@
+import { Request, Response, NextFunction } from "express";
+import { Portfolio } from "../models/portfolioModel";
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    _id: string;
+  };
+}
+
+export const getPortfolio = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const portfolio = await Portfolio.find({ userId: req.user?._id });
+    res.status(200).json(portfolio);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const addPortfolioItem = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { coinId, amount, buyPrice, note } = req.body;
+
+    const item = await Portfolio.create({
+      userId: req.user?._id,
+      coinId,
+      amount,
+      buyPrice,
+      note,
+    });
+
+    res.status(201).json(item);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updatePortfolioItem = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { amount, buyPrice, note } = req.body;
+
+    const updated = await Portfolio.findOneAndUpdate(
+      { _id: id, userId: req.user?._id },
+      { amount, buyPrice, note },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Item not found" });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deletePortfolioItem = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await Portfolio.findOneAndDelete({
+      _id: id,
+      userId: req.user?._id,
+    });
+
+    if (!deleted) return res.status(404).json({ message: "Item not found" });
+
+    res.status(200).json({ message: "Item deleted" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // import { Request, Response } from "express";
 // import Portfolio from "../models/portfolioModel";
 // import mongoose from "mongoose";
