@@ -9,7 +9,7 @@ export const connectDB = async () => {
       );
     }
 
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(mongoUri, { dbName: "coinfusion" });
     console.log("✅ Connected to MongoDB");
   } catch (error) {
     console.error("❌ MongoDB connection error:", error);
