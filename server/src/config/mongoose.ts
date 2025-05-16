@@ -1,22 +1,18 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
-
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env"
-  );
-}
-
-export const connect = async () => {
+export const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {dbName: "coinfusion_db"});
-    console.log("Connected to MongoDB");
+    const mongoUri = process.env.MONGODB_URI as string;
+    if (!mongoUri) {
+      throw new Error(
+        "Please define the MONGODB_URI environment variable inside .env"
+      );
+    }
+
+    await mongoose.connect(mongoUri);
+    console.log("✅ Connected to MongoDB");
   } catch (error) {
-    console.error(
-      "Error connecting to MongoDB",
-      error instanceof Error ? error.message : error
-    );
+    console.error("❌ MongoDB connection error:", error);
     process.exit(1);
   }
 };
