@@ -66,28 +66,16 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ message: "Email is required" });
-    }
+    if (!email) throw new Error("EmailRequiredError");
+    if (!password) throw new Error("PasswordRequiredError");
 
-    if (!password) {
-      return res.status(400).json({ message: "Password is required" });
-    }
+    const findUser = await User.findOne({ email }).select("_id email password");
+    if (!findUser) throw new Error("Unauthorized");
+    if (!comparePassword(password, findUser.password))
+      throw new Error("Unauthorized");
 
-    const user = await User.findOne({ email }).select("_id email password");
-
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    const isMatch = await comparePassword(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    const token = signToken({ _id: user._id.toString() });
-    return res.status(200).json({ access_token: token });
+    const access_token = signToken({ _id: findUser._id as string });
+    res.status(200).json({ access_token });
   } catch (error) {
     next(error);
   }
