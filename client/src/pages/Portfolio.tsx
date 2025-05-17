@@ -1,40 +1,64 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { getMarketData } from "../services/coingecko";
-import { removeHolding } from "../slices/portfolioSlice";
+import axios from "axios";
 import type { Coin } from "../types/Coin";
 
+type Holding = {
+  coinId: string;
+  amount: number;
+};
 
 export default function Portfolio() {
-  const holdings = useSelector((state: RootState) => state.portfolio.holdings);
   const currency = useSelector((state: RootState) => state.currency.currency);
   const symbol = useSelector((state: RootState) => state.currency.symbol);
+
   const [coins, setCoins] = useState<Coin[]>([]);
-  const dispatch = useDispatch();
+  const [holdings, setHoldings] = useState<Holding[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPortfolio = async () => {
       try {
-        const data = await getMarketData(currency);
-        const filtered = data.filter((coin: Coin) =>
-          holdings.some((h) => h.id === coin.id)
+        const token = localStorage.getItem("access_token");
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/portfolio`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
-        setCoins(filtered);
-      } catch (error) {
-        console.error("Failed to fetch market data:", error);
+
+        const portfolioData: Holding[] = res.data;
+        setHoldings(portfolioData);
+
+        const marketData = await getMarketData(currency);
+        const filteredCoins = marketData.filter((coin: Coin) =>
+          portfolioData.some((h) => h.coinId === coin.id)
+        );
+
+        setCoins(filteredCoins);
+      } catch (err) {
+        console.error("Gagal memuat portofolio:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, [holdings, currency]);
+    fetchPortfolio();
+  }, [currency]);
 
-  const holdingMap = new Map(holdings.map((h) => [h.id, h.amount]));
+  const holdingMap = new Map(holdings.map((h) => [h.coinId, h.amount]));
 
   const totalValue = coins.reduce((acc, coin) => {
     const amount = holdingMap.get(coin.id) || 0;
     return acc + coin.current_price * amount;
   }, 0);
+
+  if (loading) return <p className="p-4">Loading portfolio...</p>;
 
   return (
     <div className="p-4">
@@ -78,12 +102,7 @@ export default function Portfolio() {
                         </p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => dispatch(removeHolding(coin.id))}
-                      className="text-red-400 hover:text-red-600"
-                    >
-                      Remove
-                    </button>
+                    {/* Optional: Remove from server */}
                   </div>
                   <p className="mt-2">Amount: {amount}</p>
                   <p>

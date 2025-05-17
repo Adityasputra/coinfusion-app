@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { getCoinDetail, getCoinMarketChart } from "../services/coingecko";
+import axios from "axios";
 import {
   LineChart,
   Line,
@@ -11,7 +12,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { addOrUpdateHolding } from "../slices/portfolioSlice";
 
 export default function CoinDetail() {
   const { id } = useParams();
@@ -23,7 +23,6 @@ export default function CoinDetail() {
   const [coin, setCoin] = useState<any>(null);
   const [chartData, setChartData] = useState<any[]>([]);
   const [amountInput, setAmountInput] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!id) return;
@@ -48,6 +47,39 @@ export default function CoinDetail() {
 
     fetchData();
   }, [id, currency]);
+
+  const handleAddToPortfolio = async () => {
+    const amount = parseFloat(amountInput);
+    if (isNaN(amount) || amount <= 0 || !id) {
+      alert("Masukkan jumlah yang valid");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("access_token");
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/portfolio`,
+        {
+          coinId: id,
+          amount,
+          buyPrice: coin.market_data.current_price[currency],
+          note: "Ditambahkan dari halaman detail",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Berhasil menambahkan ke portofolio!");
+      setAmountInput("");
+    } catch (error) {
+      console.error("Gagal menambahkan portofolio:", error);
+      alert("Terjadi kesalahan saat menyimpan ke database.");
+    }
+  };
 
   if (!coin) return <p className="p-4">Loading...</p>;
 
@@ -85,13 +117,7 @@ export default function CoinDetail() {
             className="p-2 rounded bg-gray-800 text-white w-40"
           />
           <button
-            onClick={() => {
-              const amount = parseFloat(amountInput);
-              if (!isNaN(amount) && amount >= 0 && id) {
-                dispatch(addOrUpdateHolding({ id, amount }));
-                setAmountInput("");
-              }
-            }}
+            onClick={handleAddToPortfolio}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
             Simpan
